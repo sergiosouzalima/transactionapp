@@ -16,6 +16,7 @@ Types::TransactionType = GraphQL::ObjectType.define do
   field :account do
     type Types::AccountType
     description "Conta associada a esta transação"
+
     resolve ->(transaction, args, context){
       transaction.account
     }

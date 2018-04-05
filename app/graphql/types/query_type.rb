@@ -8,7 +8,7 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :transaction, Types::TransactionType do
     # passamos aqui o "id" do Transaction como argumento de consulta
     # esse valor de "id" vem do front-end para o back-end
-    argument :id, types.ID # o "id" tem um tipo especial chamado ID
+    argument :id, types.ID
     description "Identificação da Transação"
 
     # aqui é o método chamado "resolve" que resgata
@@ -20,17 +20,31 @@ Types::QueryType = GraphQL::ObjectType.define do
 
   field :allTransactions, types[Types::TransactionType] do
     description "Retorna todas Transações"
+    argument :equity, types.String
 
     resolve -> (obj, args, ctx) {
-      Transaction.all
+      return Transaction.all unless args[:equity]
+      Transaction.where('equity like ?', "%#{args[:equity]}%")
     }
   end
 
   field :allAdvisors, types[Types::AdvisorType] do
-    description "Retorna todos os Conselheiros"
+    description "Retorna todos Conselheiros"
+    argument :name, types.String
 
     resolve -> (obj, args, ctx) {
-      Advisor.all.reverse
+      return Advisor.all.reverse unless args[:name]
+      Advisor.where('name like ?', "%#{args[:name]}%").reverse
+    }
+  end
+
+  field :allAccounts, types[Types::AccountType] do
+    description "Retorna todas Contas"
+    argument :name, types.String
+
+    resolve -> (obj, args, ctx) {
+      return Account.all.reverse unless args[:name]
+      Account.where('name like ?', "%#{args[:name]}%")
     }
   end
 end
