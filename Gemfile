@@ -41,6 +41,19 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem "rails-erd"
+  # to generate your diagram:¬
+  # You now have a new Rake task in your application.
+  # Generate an up-to-date model diagram with...
+  # $ bundle exec rake erd attributes=foreign_keys,primary_keys
+  # $ bundle exec rake erd attributes=foreign_keys,primary_keys
+  #                        title='Diagrama Entidade-Relacionamento (Visao PK/FK)'
+  #                        filename='erd_pk_fk'
+  # $ bundle exec rake erd attributes=false
+  #                        title='Diagrama Entidade-Relacionamento (Visao Entidades)'
+  #                        filename='erd_entities'
+  # $ bundle exec rake erd title='Diagrama Entidade-Relacionamento (Visao Atributos)'
+  #                        filename='erd_attributes'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
